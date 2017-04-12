@@ -26,7 +26,7 @@ Graphical should now be accessible on http://localhost:8111/
 ### Drawing Shapes
 
 ```
-var { graphical } = require('graphical');
+var { Rectangle, graphical } = require('graphical');
 
 graphical(8111);
 
