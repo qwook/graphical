@@ -6,9 +6,10 @@ var {
   Drawable,
   Text,
   graphical
-} = require('./index.js');
+} = require('.');
 
 // start listening
+
 graphical(8111);
 
 // draw a simple rectangle

@@ -1,4 +1,5 @@
 module.exports = function() {
+
   var canvas = document.getElementById("canvas");
   var ctx = canvas.getContext('2d');
 
@@ -13,6 +14,8 @@ module.exports = function() {
   function open(ws) {
     var drawables = {};
 
+    // Loop through all the shapes and draw them
+
     function redraw() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -20,6 +23,8 @@ module.exports = function() {
       for (var i in drawables) {
         drawablesArray.push(drawables[i]);
       }
+
+      // Sort drawable by z-index
 
       drawablesArray.sort(function(a, b) {
         return a.z - b.z;
@@ -34,6 +39,8 @@ module.exports = function() {
     ws.addEventListener('message', function(event) {
       var data = JSON.parse(event.data);
 
+      // Handle the creation of multiple drawables
+
       if (data.cmd == 'initial') {
         for (var i in data.drawables) {
           var drawable = data.drawables[i];
@@ -47,6 +54,8 @@ module.exports = function() {
         redraw();
       }
 
+      // Handle a state change of a drawable
+
       if (data.cmd == 'update') {
         var drawable = drawables[data.id];
         if (drawable) {
@@ -58,6 +67,8 @@ module.exports = function() {
         }
       }
 
+      // Delete a drawable
+
       if (data.cmd == 'delete') {
         delete drawables[data.id];
 
@@ -65,6 +76,8 @@ module.exports = function() {
       }
     })
   }
+
+  // Open up websockets with auto-reconnect
 
   var ws = null;
   function retry () {
