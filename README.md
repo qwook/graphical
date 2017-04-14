@@ -5,8 +5,12 @@ Graphical is a very lightweight framework used to dynamically draw graphics  fro
 
 No more having to deal with console.log spamming, make your debugging graphical!
 
-## Getting started
+![alt steam controller example](https://qwook.github.io/graphical/controller.gif "Steam controller example")
 
+Example visualizing the steam controller [(Source code)](https://github.com/qwook/graphical-steam-controller)
+
+
+## Getting started
 
 ### First steps
 
@@ -14,7 +18,7 @@ Install graphical through NPM:
 
 `npm install --save-dev graphical`
 
-```
+```javascript
 var { graphical } = require('graphical');
 
 graphical(8111); // listen on port 8111
@@ -25,7 +29,7 @@ Graphical should now be accessible on http://localhost:8111/
 
 ### Drawing Shapes
 
-```
+```javascript
 var { Rectangle, graphical } = require('graphical');
 
 graphical(8111);
@@ -41,6 +45,9 @@ Check out `./test.js` for more examples.
 
 
 ## API
+
+### `graphical( [port, sendRate] )`
+`sendRate` is how frequently graphical should send state changes. Default is every 10 milliseconds.
 
 ### `new Drawable()`
 Base class for all graphical objects.
