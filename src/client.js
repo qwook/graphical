@@ -54,17 +54,20 @@ module.exports = function() {
         redraw();
       }
 
-      // Handle a state change of a drawable
+      // Handle a broadcast state change
 
       if (data.cmd == 'update') {
-        var drawable = drawables[data.id];
-        if (drawable) {
-          for (var k in data.newState) {
-            drawable[k] = data.newState[k];
+        for (var id in data.broadcastState) {
+          var drawable = drawables[id];
+          var newState = data.broadcastState[id];
+          if (drawable) {
+            for (var k in newState) {
+              drawable[k] = newState[k];
+            }
           }
-
-          redraw();
         }
+
+        redraw();
       }
 
       // Delete a drawable

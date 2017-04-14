@@ -1,5 +1,5 @@
 
-const {drawables, broadcast} = require('../server.js');
+const {drawables, broadcast, applyState} = require('../server.js');
 
 var id = 0;
 
@@ -24,7 +24,7 @@ module.exports = class Drawable {
   }
 
   setState(newState) {
-    broadcast({cmd: 'update', id: this.id, newState});
+    applyState(this.id, newState);
     Object.assign(this.state, newState);
   }
 

@@ -38,6 +38,18 @@ wss.on('connection', (ws) => {
 
 wss.on('error', () => {});
 
+var broadcastState = {};
+
+function updateState() {
+  broadcast({cmd: 'update', broadcastState});
+  broadcastState = {};
+};
+
+function applyState(id, state) {
+  broadcastState[id] = broadcastState[id] || {};
+  Object.assign(broadcastState[id], state);
+}
+
 function broadcast(data) {
   wss.clients.forEach((client) => {
     if (client.readyState == WebSockets.OPEN) {
@@ -46,12 +58,17 @@ function broadcast(data) {
   })
 }
 
-function graphical(port = 3355) {
+var called = false;
+function graphical(port = 3355, updateStateInterval = 10) {
+  if (called) return;
+  called = true;
   server.listen(port, () => console.log(`visual debugger on http://localhost:${port}/`));
+  setInterval(updateState, updateStateInterval);
 }
 
 module.exports = {
   drawables,
   broadcast,
+  applyState,
   graphical
 }
